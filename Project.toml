@@ -1,8 +1,3 @@
-name = "CurricularAnalyticsDiffNotebook"
-uuid = "98a57bb3-4171-48e7-aff3-471f3d66bdb4"
-authors = ["Arturo Amaya"]
-version = "0.1.0"
-
 [deps]
 CurricularAnalytics = "593ffa3d-269e-5d81-88bc-c3b6809c35a6"
 CurricularAnalyticsDiff = "8ef3bf4c-6f5d-446e-9bf1-598bf46b8e79"
