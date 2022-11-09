@@ -27,7 +27,7 @@ These are going to be really really really long names.
 using CurricularAnalytics
 
 # HELPER FNS ----------------------
-function has_match(catalog,course)
+function has_match(catalog, course)
     # this could be a lot faster, tbh
     ret = false
     for potential_match in catalog
@@ -36,17 +36,34 @@ function has_match(catalog,course)
             break
         end
     end
+    ret
 end
 
-function add_course_copy(catalog,course)
-    copy = Course(course.name,course.credit_hours)
-    push!(catalog,copy)
+function add_course_copy!(catalog, course)
+    copy = Course(course.name, course.credit_hours)
+    push!(catalog, copy)
+    copy
 end
 
-catalog = []
-for (root,dirs,files) in walkdir("./files/massive/output2022/")
+function get_course_copy(catalog, course)
+    ret = 0
+    for c in catalog
+        if c.name == course.name
+            ret = c
+            break
+        end
+    end
+    ret
+end
+
+function edit_canonical_name(addition, course)
+    course.canonical_name = course.canonical_name * ",$(addition)"
+end
+
+catalog = Array{Course,1}([])
+for (root, dirs, files) in walkdir("./files/massive/output2022/")
     for file in files
-        read = read_csv(joinpath(root,file))
+        read = read_csv(joinpath(root, file))
         if typeof(read) == DegreePlan
             curr = read.curriculum
         else
@@ -54,24 +71,39 @@ for (root,dirs,files) in walkdir("./files/massive/output2022/")
         end
         #Loop through courses in each curriculum:
         for course in curr.courses
-            if !has_match(catalog,course)
+            if !(has_match(catalog, course))
                 # add copy of course to catalog
+                copy = add_course_copy!(catalog, course)
                 # edit canonical name
+                edit_canonical_name("$(root[end-3:end])", copy)
             else
                 # edit canonical name
+                edit_canonical_name(root[end-3:end], get_course_copy(catalog, course))
             end
-            for (prereq_id, type) in course.prerequisites
+            for (prereq_id, type) in course.requisites
                 #actually get prereq, this is an id
-                prereq = course_from_id(curr,prereq_id)
-                if !has_match(catalog,course)
+                prereq = course_from_id(curr, prereq_id)
+                if !has_match(catalog, prereq)
                     # add copy to catalog
+                    add_course_copy!(catalog, prereq)
                     # edit canonical name
+                    edit_canonical_name(root[end-3:end], get_course_copy(catalog, prereq))
                 else
                     # edit canonical name
+                    edit_canonical_name(root[end-3:end], get_course_copy(catalog, prereq))
                 end
                 # add prereq relation:
                 # get matching course from catalog
+                course_copy = get_course_copy(catalog, course)
                 # get matching prereq from catalog
+                prereq_copy = get_course_copy(catalog, prereq)
                 # add prereq
+                add_requisite!(prereq_copy, course_copy, type)
             end
         end
+    end
+end
+
+
+new_curriculum = Curriculum("CONDENSED", catalog)
+write_csv(new_curriculum, "./targets/condensed.csv")
