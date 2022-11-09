@@ -23,5 +23,55 @@ MAJORCODE1_CURR, MAJORCODE2_COLLEGE, MAJORCODE3_COLLEGE, etc
 for example, MATH 20B appearing in EC26 and EC27 (too keep it short):
 EC26_CURR, EC26_TH,...,EC27_CURR, EC27_TH, EC27_WA,....,
 These are going to be really really really long names.
+=#
+using CurricularAnalytics
 
-for 
+# HELPER FNS ----------------------
+function has_match(catalog,course)
+    # this could be a lot faster, tbh
+    ret = false
+    for potential_match in catalog
+        if potential_match.name == course.name
+            ret = true
+            break
+        end
+    end
+end
+
+function add_course_copy(catalog,course)
+    copy = Course(course.name,course.credit_hours)
+    push!(catalog,copy)
+end
+
+catalog = []
+for (root,dirs,files) in walkdir("./files/massive/output2022/")
+    for file in files
+        read = read_csv(joinpath(root,file))
+        if typeof(read) == DegreePlan
+            curr = read.curriculum
+        else
+            curr = read
+        end
+        #Loop through courses in each curriculum:
+        for course in curr.courses
+            if !has_match(catalog,course)
+                # add copy of course to catalog
+                # edit canonical name
+            else
+                # edit canonical name
+            end
+            for (prereq_id, type) in course.prerequisites
+                #actually get prereq, this is an id
+                prereq = course_from_id(curr,prereq_id)
+                if !has_match(catalog,course)
+                    # add copy to catalog
+                    # edit canonical name
+                else
+                    # edit canonical name
+                end
+                # add prereq relation:
+                # get matching course from catalog
+                # get matching prereq from catalog
+                # add prereq
+            end
+        end
