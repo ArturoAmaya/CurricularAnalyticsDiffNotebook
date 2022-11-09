@@ -75,10 +75,10 @@ for (root, dirs, files) in walkdir("./files/massive/output2022/")
                 # add copy of course to catalog
                 copy = add_course_copy!(catalog, course)
                 # edit canonical name
-                edit_canonical_name("$(root[end-3:end])", copy)
+                edit_canonical_name("$(root[end-3:end])$(file[1:end-4])", copy)
             else
                 # edit canonical name
-                edit_canonical_name(root[end-3:end], get_course_copy(catalog, course))
+                edit_canonical_name("$(root[end-3:end])$(file[1:end-4])", get_course_copy(catalog, course))
             end
             for (prereq_id, type) in course.requisites
                 #actually get prereq, this is an id
@@ -87,10 +87,10 @@ for (root, dirs, files) in walkdir("./files/massive/output2022/")
                     # add copy to catalog
                     add_course_copy!(catalog, prereq)
                     # edit canonical name
-                    edit_canonical_name(root[end-3:end], get_course_copy(catalog, prereq))
+                    edit_canonical_name("$(root[end-3:end])$(file[1:end-4])", get_course_copy(catalog, prereq))
                 else
                     # edit canonical name
-                    edit_canonical_name(root[end-3:end], get_course_copy(catalog, prereq))
+                    edit_canonical_name("$(root[end-3:end])$(file[1:end-4])", get_course_copy(catalog, prereq))
                 end
                 # add prereq relation:
                 # get matching course from catalog
