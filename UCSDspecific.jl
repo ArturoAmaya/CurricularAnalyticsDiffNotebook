@@ -63,6 +63,7 @@ end
 catalog = Array{Course,1}([])
 for (root, dirs, files) in walkdir("./files/massive/output2022/")
     for file in files
+        println(file)
         read = read_csv(joinpath(root, file))
         if typeof(read) == DegreePlan
             curr = read.curriculum
