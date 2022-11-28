@@ -37,38 +37,39 @@ running the add course algorithm with math 20C returns a set that is greater tha
 very weird
 
 [
-- [ ] "BE27FI", 
-- [ ] "BE27MU",
-- [ ] "BE27RE",
-- [ ] "BE27SI",
-- [ ] "BE27SN",
-- [ ] "BE27TH",
-- [ ] "BE27WA",
-- [ ] "BE27curriculum",
-- [ ] "BE29FI",
-- [ ] "BE29MU",
-- [ ] "BE29RE",
-- [ ] "BE29SI",
-- [ ] "BE29SN",
-- [ ] "BE29TH",
-- [ ] "BE29WA",
-- [ ] "BE29curriculum",
-- [ ] "CH35FI",
-- [ ] "CH35MU",
-- [ ] "CH35RE",
-- [ ] "CH35SI",
-- [ ] "CH35SN",
-- [ ] "CH35TH",
-- [ ] "CH35WA", 
-- [ ] "CH35curriculum",
-- [ ] "CH38FI",
-- [ ] "CH38MU",
-- [ ] "CH38RE",
-- [ ] "CH38SI",
-- [ ] "CH38SN",
-- [ ] "CH38TH",
-- [ ] "CH38WA",
-- [ ] "CH38curriculum",
+- [ ] "BE27FI" : MATH 20C OR 31BH
+- [ ] "BE27MU": ""
+- [ ] "BE27RE": ""
+- [ ] "BE27SI"; ""
+- [ ] "BE27SN": ""
+- [ ] "BE27TH": ""
+- [ ] "BE27WA": ""
+- [ ] "BE27curriculum": ""
+- [ ] "BE29FI": ""
+- [ ] "BE29MU": ""
+- [ ] "BE29RE": ""
+- [ ] "BE29SI": ""
+- [ ] "BE29SN": ""
+- [ ] "BE29TH": ""
+- [ ] "BE29WA": ""
+- [ ] "BE29curriculum": ""
+- [ ] "CH35FI": MATH 10C -> CHEM 126A
+- [ ] "CH35MU": MATH 10C
+- [ ] "CH35RE": MATH 10C
+- [ ] "CH35SI": MATH 10C
+- [ ] "CH35SN": MATH 10C
+- [ ] "CH35TH": MATH 10C
+- [ ] "CH35WA": MATH 10C
+- [ ] "CH35curriculum": MATH 10C
+- [ ] "CH38FI": MATH 10C -> CHEM 126A
+- [ ] "CH38MU": MATH 10C -> CHEM 126A
+- [ ] "CH38RE": MATH 10C -> CHEM 126A
+- [ ] "CH38SI": MATH 10C -> CHEM 126A
+- [ ] "CH38SN": MATH 10C -> CHEM 126A
+- [ ] "CH38TH": MATH 10C -> CHEM 126A
+- [ ] "CH38WA": MATH 10C -> CHEM 126A
+- [ ] "CH38curriculum": : MATH 10C -> CHEM 126A
+  The above ones are ok...
 - [ ] "MU27FI",
 - [ ] "MU27MU",
 - [ ] "MU27SI",
@@ -76,6 +77,7 @@ very weird
 - [ ] "MU27TH",
 - [ ] "MU27WA",
 - [ ] "MU27curriculum",
+Here, there is no 10C or 20C/31AH or whatever. The closest point is MATH 20B. This merits plenty of investigation now.
 - [ ] "UNPSRE"
 
 SO: apparently this is because this system captures "equivalent" prerequisites. So these show up on the list because in these majors the classes that would depend on 20C actually depend on "20C or 10C" or something like that. This isn't an issue yet for the following reasons:
