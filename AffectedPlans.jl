@@ -7,53 +7,26 @@ function delete_prerequisite_institutional(curriculum::Curriculum, target::Abstr
     # if it's all good:\n,
     target_course_majors = split(target_course.canonical_name, ",")
     prereq_course_majors = split(prereq_course.canonical_name, ",")
-    prev_major = "PL99"
-    # TODO: consider just a set intersect
-    count = 0
-    for major in target_course_majors
-        if major in prereq_course_majors
-            #println("\n$major")
-            if major != ""
-                if major[1:4] != prev_major[1:4]
-                    prev_major = major
-                    print("\n$(major[1:4]): $(major[5:end]), ")
-                    count += 1
-                elseif major != prev_major # don't ask me why for some reason each plan code shows up multiple times
-                    prev_major = major
-                    print("$(major[5:end]), ")
-                    count += 1
-                end
-            end
-        end
-    end
     println()
-    print("Affected plans: $count")
+    ret = intersect(Set(target_course_majors), Set(prereq_course_majors))
+    ret = sort(collect(ret))
+    if ret[1] == ""
+        popfirst!(ret)
+    end
+    print_affected_plans(ret)
+    print("Affected plans: $(length(ret))")
+    return ret
     # TODO: return value instead of prints
 end
 
-function delete_course_institutional(curriculum::Curriculum, course_to_remove::AbstractString)
+function delete_course_institutional(curriculum::Curriculum, course_to_remove_name::AbstractString)
     course_to_remove = course_from_name(curriculum, course_to_remove_name)
     affected_majors = split(course_to_remove.canonical_name, ",")
-    prev_major = "PL99"
-    count = 0
-    # TODO: consider set intersect here too
-    for major in affected_majors
-        if major != ""
-            if major[1:4] != prev_major[1:4]
-                prev_major = major
-                print("\n$(major[1:4]): $(major[5:end]), ")
-                count += 1
-            elseif major != prev_major
-                prev_major = major
-                print("$(major[5:end]), ")
-                count += 1
-            end
-        end
-    end
-    println()
-    print("Affected plans: $count")
+    print_affected_plans(affected_majors)
+    print("Affected plans: $(length(affected_majors))")
     # NOTE THIS DOESNT ACTUALLY CHANGE THE CURRICULUM OBJECT OK?
     # TODO: add return value 
+    return affected_majors
 end
 
 function add_course_institutional(curriculum::Curriculum, course_name::AbstractString, credit_hours::Real, prereqs::Dict, dependencies::Dict)
@@ -63,7 +36,7 @@ function add_course_institutional(curriculum::Curriculum, course_name::AbstractS
     # get all the paths that depend on me
     ## first, get me
     #UCSD = read_csv("./targets/condensed.csv");
-    course = course_from_name(new_UCSD, new_course_name)
+    course = course_from_name(new_curriculum, new_course_name)
     my_centrality_paths = centrality_investigator(course, new_UCSD)
     if length(my_centrality_paths) > 0
         # ok actually do stuff
@@ -105,12 +78,13 @@ function add_course_institutional(curriculum::Curriculum, course_name::AbstractS
         print(full_set)
         # look at all the paths that depend on me and for each path take the union of their majors
         # then combine the two sets
+        return full_set
     else
         # ok this seems to not affect any majors because it's not been hooked up to anything
         println("This course hasn't been hooked up to anything, it didn't affect any majors other than the one it is in")
     end
     # TODO: correct return value and prettier printing
-
+    # TODO: 
 end
 
 function add_prereq_institutional(curriculum::Curriculum, course_with_new_prereq::AbstractString)
@@ -134,4 +108,25 @@ function add_prereq_institutional(curriculum::Curriculum, course_with_new_prereq
     println()
     print("Affected plans: $count")
     # TODO: return value to sandbox
+end
+
+function print_affected_plans(affected_plans)
+    prev_major = "PL99"
+    # TODO: consider just a set intersect
+    count = 0
+    for major in affected_plans
+        #println("\n$major")
+        if major != ""
+            if major[1:4] != prev_major[1:4]
+                prev_major = major
+                print("\n$(major[1:4]): $(major[5:end]), ")
+                count += 1
+            elseif major != prev_major # don't ask me why for some reason each plan code shows up multiple times
+                prev_major = major
+                print("$(major[5:end]), ")
+                count += 1
+            end
+        end
+    end
+    println()
 end
