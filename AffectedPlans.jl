@@ -16,7 +16,6 @@ function delete_prerequisite_institutional(curriculum::Curriculum, target::Abstr
     print_affected_plans(ret)
     print("Affected plans: $(length(ret))")
     return ret
-    # TODO: return value instead of prints
 end
 
 function delete_course_institutional(curriculum::Curriculum, course_to_remove_name::AbstractString)
@@ -25,7 +24,6 @@ function delete_course_institutional(curriculum::Curriculum, course_to_remove_na
     print_affected_plans(affected_majors)
     print("Affected plans: $(length(affected_majors))")
     # NOTE THIS DOESNT ACTUALLY CHANGE THE CURRICULUM OBJECT OK?
-    # TODO: add return value 
     return affected_majors
 end
 
@@ -82,9 +80,10 @@ function add_course_institutional(curriculum::Curriculum, course_name::AbstractS
     else
         # ok this seems to not affect any majors because it's not been hooked up to anything
         println("This course hasn't been hooked up to anything, it didn't affect any majors other than the one it is in")
+        full_set = Set()
+        return full_set
     end
-    # TODO: correct return value and prettier printing
-    # TODO: 
+
 end
 
 function add_prereq_institutional(curriculum::Curriculum, course_with_new_prereq::AbstractString)
@@ -94,16 +93,14 @@ function add_prereq_institutional(curriculum::Curriculum, course_with_new_prereq
     print_affected_plans(affected_majors)
     print("Affected plans: $(length(affected_majors))")
     # NOTE THIS DOESNT ACTUALLY CHANGE THE CURRICULUM OBJECT OK?
-    # TODO: add return value 
+    # also note that this doesn't explain HOW the affected plans are affected, simply that they are
     return affected_majors
 end
 
 function print_affected_plans(affected_plans)
     prev_major = "PL99"
-    # TODO: consider just a set intersect
     count = 0
     for major in affected_plans
-        #println("\n$major")
         if major != ""
             if major[1:4] != prev_major[1:4]
                 prev_major = major
