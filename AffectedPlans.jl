@@ -206,6 +206,9 @@ end
 
 function add_prereq_institutional(curriculum::Curriculum, course_with_new_prereq::AbstractString, prereq::AbstractString)
     course_with_new_prereq = course_from_name(curriculum, course_with_new_prereq)
+    if typeof(course_with_new_prereq) == Nothing
+        throw(ArgumentError("I'm sorry, we couldn't find your target course in the given curriculum. Make sure you got the name exactly right."))
+    end
     affected_majors = split(course_with_new_prereq.canonical_name, ",")
 
     print_affected_plans(affected_majors)
@@ -217,6 +220,9 @@ end
 
 function add_prereq_institutional!(curriculum::Curriculum, course_with_new_prereq::AbstractString, prereq::AbstractString)
     course_with_new_prereq_course = course_from_name(curriculum, course_with_new_prereq)
+    if typeof(course_with_new_prereq) == Nothing
+        throw(ArgumentError("I'm sorry, we couldn't find your target course in the given curriculum. Make sure you got the name exactly right."))
+    end
     new_curric = add_prereq(curriculum, course_with_new_prereq, prereq, pre)
     affected_majors = split(course_with_new_prereq_course.canonical_name, ",")
 
@@ -245,3 +251,7 @@ function print_affected_plans(affected_plans)
     end
     println()
 end
+
+## what is in the 20c canon name but not in the calculated set
+#sort(collect(setdiff(Set(split(course.canonical_name,",")),affected)))
+
