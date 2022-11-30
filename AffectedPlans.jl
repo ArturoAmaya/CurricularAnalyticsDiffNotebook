@@ -91,24 +91,11 @@ function add_prereq_institutional(curriculum::Curriculum, course_with_new_prereq
     course_with_new_prereq = course_from_name(curriculum, course_with_new_prereq)
     affected_majors = split(course_with_new_prereq.canonical_name, ",")
 
-    prev_major = "PL99"
-    count = 0
-    for major in affected_majors
-        if major != ""
-            if major[1:4] != prev_major[1:4]
-                prev_major = major
-                print("\n$(major[1:4]): $(major[5:end]), ")
-                count += 1
-            elseif major != prev_major
-                prev_major = major
-                print("$(major[5:end]), ")
-                count += 1
-            end
-        end
-    end
-    println()
-    print("Affected plans: $count")
-    # TODO: return value to sandbox
+    print_affected_plans(affected_majors)
+    print("Affected plans: $(length(affected_majors))")
+    # NOTE THIS DOESNT ACTUALLY CHANGE THE CURRICULUM OBJECT OK?
+    # TODO: add return value 
+    return affected_majors
 end
 
 function print_affected_plans(affected_plans)
