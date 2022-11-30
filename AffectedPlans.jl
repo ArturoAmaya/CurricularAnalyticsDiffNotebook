@@ -30,7 +30,7 @@ function delete_course_institutional(curriculum::Curriculum, course_to_remove_na
 end
 
 function add_course_institutional(curriculum::Curriculum, course_name::AbstractString, credit_hours::Real, prereqs::Dict, dependencies::Dict)
-    new_curriculum = add_course(curriculum, new_course_name, new_course_credit_hours, prereqs, dependencies)
+    new_curriculum = add_course(curriculum, course_name, new_course_credit_hours, prereqs, dependencies)
     errors = IOBuffer()
     isvalid_curriculum(new_UCSD, errors)
     # get all the paths that depend on me
@@ -75,7 +75,7 @@ function add_course_institutional(curriculum::Curriculum, course_name::AbstractS
         end
         full_set = union(prereq_set, dep_set)
         full_set = sort(collect(full_set))
-        print(full_set)
+        print_affected_plans(full_set)
         # look at all the paths that depend on me and for each path take the union of their majors
         # then combine the two sets
         return full_set
@@ -90,6 +90,7 @@ end
 function add_prereq_institutional(curriculum::Curriculum, course_with_new_prereq::AbstractString)
     course_with_new_prereq = course_from_name(curriculum, course_with_new_prereq)
     affected_majors = split(course_with_new_prereq.canonical_name, ",")
+
     prev_major = "PL99"
     count = 0
     for major in affected_majors
