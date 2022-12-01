@@ -86,6 +86,7 @@ function delete_course_institutional!(curriculum::Curriculum, course_to_remove_n
     return (affected_majors, curriculum)
 end
 
+
 function add_course_institutional(curriculum::Curriculum, course_name::AbstractString, new_course_credit_hours::Real, prereqs::Dict, dependencies::Dict)
     new_curriculum = add_course(curriculum, course_name, new_course_credit_hours, prereqs, dependencies)
     # TODO error checking on this one
@@ -145,6 +146,7 @@ function add_course_institutional(curriculum::Curriculum, course_name::AbstractS
     end
 end
 
+# TODO: edit to add the 
 function add_course_institutional!(curriculum::Curriculum, course_name::AbstractString, new_course_credit_hours::Real, prereqs::Dict, dependencies::Dict)
     new_curriculum = add_course(curriculum, course_name, new_course_credit_hours, prereqs, dependencies)
     # TODO error checking on this one
