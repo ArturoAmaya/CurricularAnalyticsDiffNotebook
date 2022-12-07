@@ -1,4 +1,3 @@
 [deps]
 CurricularAnalytics = "593ffa3d-269e-5d81-88bc-c3b6809c35a6"
-CurricularAnalyticsDiff = "8ef3bf4c-6f5d-446e-9bf1-598bf46b8e79"
 IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
