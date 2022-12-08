@@ -166,13 +166,13 @@ version = "4.1.1"
 
 [[deps.CurricularAnalytics]]
 deps = ["CSV", "DataFrames", "DataStructures", "Dates", "Documenter", "Graphs", "LinearAlgebra", "Markdown", "MetaGraphs", "Printf", "Test"]
-git-tree-sha1 = "d4b81bc051e5229444f5a87cf3c9812891cf32c8"
+git-tree-sha1 = "fb0e3a15f4d13d98d556876555e1ced19465653d"
 uuid = "593ffa3d-269e-5d81-88bc-c3b6809c35a6"
-version = "1.4.0"
+version = "1.4.2"
 
 [[deps.CurricularAnalyticsDiff]]
 deps = ["CSV", "Crayons", "CurricularAnalytics", "CurricularVisualization", "DataStructures", "JSON"]
-git-tree-sha1 = "7e7316f1798a8b338ad81348b183c38003512f13"
+git-tree-sha1 = "a6a532aabb46946c3ff4f94e6ae8d1070299d706"
 repo-rev = "main"
 repo-url = "https://github.com/ArturoAmaya/CurricularAnalyticsDiff"
 uuid = "8ef3bf4c-6f5d-446e-9bf1-598bf46b8e79"
